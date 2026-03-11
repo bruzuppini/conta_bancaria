@@ -1,4 +1,4 @@
-export class Conta {
+export abstract class Conta {
 
     private _numero: number;
     private _agencia: number;
@@ -51,7 +51,7 @@ export class Conta {
     }
 
     public set saldo(saldo: number){
-        this.saldo = saldo;
+        this._saldo = saldo;
     }
 
     public sacar(valor: number): boolean{
