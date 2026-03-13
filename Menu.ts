@@ -4,6 +4,7 @@ import { Conta } from './src/util/model/Conta';
 import { ContaCorrente } from "./src/util/model/ContaCorrente";
 import { ContaPoupanca } from "./src/util/model/ContaPoupança";
 import { ContaController } from "./src/controller/ContaController";
+import { read } from "node:fs";
 
 export function main(){
 
@@ -101,16 +102,60 @@ switch(opcao){
     case 3:
         console.log(colors.fg.whitestrong, "\n\nConsultar dados da Conta - por número\n\n", colors.reset);
 
+        console.log("Digite o número da Conta: ");
+        numero = readlinesync.questionInt("");
+        contas.procurarPorNumero(numero);
+
         keyPress()
         break;
     case 4:
-        console.log(colors.fg.whitestrong, "\n\nAtualizar dados da Conta\n\n", colors.reset)
+        console.log(colors.fg.whitestrong, "\n\nAtualizar dados da Conta\n\n", colors.reset);
+
+        console.log("Digite o número da Conta: ");
+        numero = readlinesync.questionInt();
+
+        let conta = contas.buscarNoArray(numero);
+
+        if(conta != null){
+            console.log("Digite o número da agência: ");
+            agencia = readlinesync.questionInt("");
+            
+            console.log("Digite o Nome do Titular da conta: ");
+            titular = readlinesync.question("");
+
+            tipo = conta.tipo;
+
+            console.log("Digite o Saldo da Conta (R$): ");
+            saldo = readlinesync.questionFloat("");
+
+            switch(tipo){
+                case 1:
+                    console.log("Digite o Limite da Conta (R$): ");
+                    limite = readlinesync.questionFloat("");
+                    contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
+                break;
+
+                case 2:
+                    console.log("Digite o Dia do aniversário da Conta Poupança: ");
+                    aniversario = readlinesync.questionInt("");
+                    contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
+                break;
+            }
+    
+        }else{
+            console.log(colors.fg.red, "\nA Conta número: " + numero + " não foi encontrada!", colors.reset)
+        }
 
         keyPress()
         break;
+
     case 5:
         console.log(colors.fg.whitestrong, "\n\nApagar uma Conta\n\n", colors.reset);
-
+        
+        console.log("Digite o número da Conta: ");
+        numero = readlinesync.questionInt("");
+        contas.deletar(numero);
+        
         keyPress()
         break;
     case 6:
