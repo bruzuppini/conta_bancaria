@@ -66,14 +66,16 @@ Permite visualizar o saldo atual da conta bancária.
 ```txt
 projeto-conta-bancaria/
 ├── src/
-│   ├── Conta.ts
-│   └── index.ts
+│   └── util/
+│       └── Colors.ts
+├── Menu.ts
+├── README.md
 ├── package.json
-├── tsconfig.json
-└── README.md
+├── package-lock.json
+└── tsconfig.json
 ```
 
-> A estrutura pode variar de acordo com a organização dos arquivos do projeto.
+> O arquivo `Menu.ts` concentra a execução principal do sistema, enquanto `Colors.ts` auxilia na estilização das mensagens exibidas no terminal.
 
 ---
 
